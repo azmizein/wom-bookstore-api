@@ -17,16 +17,16 @@ const users = [
 
 const userSeeder = async () => {
   try {
-    console.log("🌱 Seeding users...");
+    console.log("Seeding users...");
 
     for (const userData of users) {
       await User.create(userData);
-      console.log(`  ✓ Created user: ${userData.email} (${userData.role})`);
+      console.log(`Created user: ${userData.email} (${userData.role})`);
     }
 
-    console.log(`✓ Successfully seeded ${users.length} users`);
+    console.log(`Successfully seeded ${users.length} users`);
   } catch (error) {
-    console.error("❌ User seeder failed:", error);
+    console.error("User seeder failed:", error);
     throw error;
   }
 };

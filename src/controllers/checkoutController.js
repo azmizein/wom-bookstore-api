@@ -45,7 +45,7 @@ class CheckoutController {
       }
 
       const transaction = await checkoutService.updatePaymentStatus(
-        value.transactionId,
+        value.transactionNumber,
         value.status
       );
       return successResponse(

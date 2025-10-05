@@ -8,6 +8,7 @@ const {
 } = require("../models");
 const { AppError } = require("../helpers/response");
 const { Op } = require("sequelize");
+const transaction = require("../models/transaction");
 
 class CheckoutService {
   generateTransactionNumber() {
@@ -140,14 +141,16 @@ class CheckoutService {
     }
   }
 
-  async updatePaymentStatus(transactionId, status) {
+  async updatePaymentStatus(transactionNumber, status) {
     const validStatuses = ["pending", "success", "failed"];
 
     if (!validStatuses.includes(status)) {
       throw new AppError("Invalid payment status", 400);
     }
 
-    const transaction = await Transaction.findByPk(transactionId);
+    const transaction = await Transaction.findOne({
+      where: { transactionNumber },
+    });
 
     if (!transaction) {
       throw new AppError("Transaction not found", 404);

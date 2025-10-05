@@ -3,37 +3,37 @@ API untuk sistem penjualan buku dengan fitur authentication, authorization, cart
 
 Authentication & Authorization
 
-✅ User roles: Customer & Admin
-✅ Login dengan email & password
-✅ Password hashing menggunakan bcrypt
-✅ JWT access token dengan masa berlaku 1 jam
-✅ Single device active session (logout otomatis di device lain)
-✅ Token disimpan di Redis
+- User roles: Customer & Admin
+- Login dengan email & password
+- Password hashing menggunakan bcrypt
+- JWT access token dengan masa berlaku 1 jam
+- Single device active session (logout otomatis di device lain)
+- Token disimpan di Redis
 
 Customer Features
 
-✅ Melihat daftar buku yang ready stock
-✅ Melihat detail buku
-✅ Menambahkan buku ke keranjang (validasi stock)
-✅ Menghapus buku dari keranjang
-✅ Checkout pembayaran
-✅ API callback untuk update status pembayaran
+- Melihat daftar buku yang ready stock
+- Melihat detail buku
+- Menambahkan buku ke keranjang (validasi stock)
+- Menghapus buku dari keranjang
+- Checkout pembayaran
+- API callback untuk update status pembayaran
 
 Admin Features
 
-✅ Melihat semua buku (termasuk out of stock)
-✅ Melihat list transaksi dengan status pembayaran
-✅ Menambah buku baru
-✅ Update stock buku (tambah/kurangi)
-✅ Hapus buku (soft delete)
-✅ Laporan penjualan per buku
+- Melihat semua buku (termasuk out of stock)
+- Melihat list transaksi dengan status pembayaran
+- Menambah buku baru
+- Update stock buku (tambah/kurangi)
+- Hapus buku (soft delete)
+- Laporan penjualan per buku
 
 Technical Features
 
-✅ Error handling konsisten
-✅ Error logging ke database
-✅ Rate limiting
-✅ Race condition handling dengan database locking
+- Error handling konsisten
+- Error logging ke database
+- Rate limiting
+- Race condition handling dengan database locking
 
 Tech Stack
 
@@ -60,6 +60,30 @@ npm install
 
 .env (Edit .env file dengan konfigurasi database dan Redis Anda.)
 
+#
+
+DB_HOST= (Ubah DB Host anda)
+DB_PORT= (Ubah ke port db anda)
+DB_NAME= (Ubah ke name db anda)
+DB_USER= (Ubah ke user db anda)
+DB_PASSWORD= (Ubah ke password db anda)
+
+# JWT Configuration
+
+JWT_SECRET=secret! (Ini bisa di ubah sesuai keinginan)
+JWT_EXPIRES_IN=1h (Ini bisa di ubah sesuai keinginan)
+
+# Redis Configuration
+
+REDIS_HOST=localhost (ubah ke port)
+REDIS_PORT=6379 (ubah ke port redis anda)
+REDIS_PASSWORD=
+
+# Application
+
+PORT=3000 (ubah ke port yang ingin anda pakai)
+NODE_ENV=development
+
 4. Create MySQL database
 
 CREATE DATABASE wom_bookstore;
@@ -80,54 +104,6 @@ node seeders/index.js
 # Development
 
 - npm run dev
-
-Project Structure
-
-wom-bookstore-api/
-├── config/
-│ ├── database.js  
-│ └── redis.js  
-├── controllers/
-│ ├── authController.js
-│ ├── bookController.js
-│ ├── cartController.js
-│ └── checkoutController.js
-├── helpers/
-│ ├── jwt.js  
-│ └── response.js  
-├── middleware/
-│ ├── auth.js  
-│ └── errorHandler.js  
-├── models/
-│ ├── index.js
-│ ├── user.js
-│ ├── book.js
-│ ├── cart.js
-│ ├── cartItem.js
-│ ├── transaction.js
-│ ├── transactionItem.js
-│ └── errorLog.js
-├── routes/
-│ ├── index.js
-│ ├── authRoutes.js
-│ ├── bookRoutes.js
-│ ├── cartRoutes.js
-│ ├── checkoutRoutes.js
-│ └── adminRoutes.js
-├── seeders/
-│ ├── index.js # Main seeder
-│ ├── userSeeder.js # User seeder
-│ └── bookSeeder.js # Book seeder
-├── services/
-│ ├── authService.js
-│ ├── bookService.js
-│ ├── cartService.js
-│ └── checkoutService.js
-├── .env
-├── .gitignore
-├── index.js
-├── package.json
-└── README.md
 
 API Endpoints
 
@@ -167,70 +143,71 @@ Database Schema
 Users
 
 id (PK)
-name
-email (unique)
-password (hashed)
-role (customer/admin)
-deviceId
-lastLoginAt
+
+- name
+- email (unique)
+- password (hashed)
+- role (customer/admin)
+- deviceId
+- lastLoginAt
 
 Books
 
-id (PK)
-title
-author
-isbn (unique)
-description
-price
-stock
-publisher
-publishedYear
-category
-isActive
+- id (PK)
+- title
+- author
+- isbn (unique)
+- description
+- price
+- stock
+- publisher
+- publishedYear
+- category
+- isActive
 
 Carts
 
-id (PK)
-userId (FK)
+- id (PK)
+- userId (FK)
 
 CartItems
 
-id (PK)
-cartId (FK)
-bookId (FK)
-quantity
-price
+- id (PK)
+- cartId (FK)
+- bookId (FK)
+- quantity
+- price
 
 Transactions
 
-id (PK)
-transactionNumber (unique)
-userId (FK)
-totalAmount
-status (pending/success/failed)
-paymentMethod
-paidAt
+- id (PK)
+- transactionNumber (unique)
+- userId (FK)
+- totalAmount
+- status (pending/success/failed)
+- paymentMethod
+- paidAt
 
 TransactionItems
 
-id (PK)
-transactionId (FK)
-bookId (FK)
-quantity
-price
-subtotal
+- id (PK)
+- transactionId (FK)
+- bookId (FK)
+- quantity
+- price
+- subtotal
 
 ErrorLogs
 
-id (PK)
-userId
-method
-url
-statusCode
-errorMessage
-errorStack
-userAgent
-ipAddress
+- id (PK)
+- userId
+- method
+- url
+- statusCode
+- errorMessage
+- errorStack
+- userAgent
+- ipAddress
 
 Notes
 
@@ -239,3 +216,4 @@ Notes
 - Rate limiting dapat disesuaikan di index.js
 - Untuk development, gunakan npm run dev dengan nodemon
 - Database akan auto-sync saat aplikasi pertama kali dijalankan
+- Untuk api update stok buku payload operation add untuk menambhakan substract untuk mengurangi

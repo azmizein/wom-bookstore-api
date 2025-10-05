@@ -8,23 +8,21 @@ const checkoutSchema = Joi.object({
 });
 
 const paymentCallbackSchema = Joi.object({
-  transactionId: Joi.number().integer().required().messages({
+  transactionNumber: Joi.string().required().messages({
     "any.required": "Transaction ID is required",
     "number.base": "Transaction ID must be a number",
   }),
   status: Joi.string()
-    .valid("pending", "paid", "failed", "cancelled")
+    .valid("pending", "success", "failed")
     .required()
     .messages({
       "any.required": "Status is required",
-      "any.only": "Status must be one of: pending, paid, failed, cancelled",
+      "any.only": "Status must be one of: pending, success, failed",
     }),
 });
 
 const transactionQuerySchema = Joi.object({
-  status: Joi.string()
-    .valid("pending", "paid", "failed", "cancelled")
-    .optional(),
+  status: Joi.string().valid("pending", "success", "failed").optional(),
 });
 
 const transactionParamSchema = Joi.object({
